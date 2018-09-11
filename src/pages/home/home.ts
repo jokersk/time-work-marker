@@ -2,14 +2,16 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import * as moment from 'moment';
 import * as math from 'mathjs'
-import { Storage } from '@ionic/storage';
+
+import { DatabaseProvider } from '../../providers/database/database';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
 
-  constructor( private storage: Storage, public navCtrl: NavController) {
+  constructor( private db:DatabaseProvider,  public navCtrl: NavController) {
     this.getToday()
   }
   today : String;
@@ -24,16 +26,26 @@ export class HomePage {
   }
 
   calcWorkingTime(){
-    console.log("calcWorkingTime")
+    
     const start = moment( this.timeOnWork ,'HH:mm')
     const end = moment(this.timeOffWork,'HH:mm')
 
     const duration = moment.duration(end.diff(start))
     this.workTime = math.round(duration.as('hours'),2)
     
-    this.storage.get('perHour').then(val=>{
-      this.toDayMoney = val * this.workTime
+    this.db.getPerHour().then(val=>{
+      this.toDayMoney = val.value * this.workTime
+
+      this.db.saveDaily(
+        {date:this.today, 
+          timeOnWork:this.timeOnWork,
+          timeOffWork:this.timeOffWork,
+          workTime: this.workTime,
+          value:this.toDayMoney}
+      )
     })
+
+    
   }
 
 

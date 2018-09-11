@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {  NavController, NavParams } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
+
+import { DatabaseProvider } from '../../providers/database/database';
+
 
 /**
  * Generated class for the SettingPage page.
@@ -16,19 +18,21 @@ import { Storage } from '@ionic/storage';
 })
 export class SettingPage {
   perHour : number = 12
-  constructor(private storage: Storage, public navCtrl: NavController, public navParams: NavParams) {
+  dbPromise : any
+  constructor(private db:DatabaseProvider, public navCtrl: NavController, public navParams: NavParams) {
    
   }
 
+  
+
   savePerHour(){
-    this.storage.set('perHour', this.perHour);
+    this.db.savePerhour(this.perHour);
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SettingPage');
-    this.storage.get('perHour').then((val) => {
-      this.perHour = val
-    });
+    this.db.getPerHour().then(data=>{
+      this.perHour = data.value
+    })
   }
 
 }

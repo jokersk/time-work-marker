@@ -1,3 +1,16 @@
 page-about {
-
+    .scroll-content{
+        overflow-x: scroll;
+    }
+    table{
+        width: 500px;
+        th{
+            padding: 10px;
+            border: 1px solid #eee;
+        }  
+        td{
+            padding: 10px;
+            border: 1px solid #eee;
+        }
+    }
 }

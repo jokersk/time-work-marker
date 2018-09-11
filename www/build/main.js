@@ -1,5 +1,140 @@
 webpackJsonp([0],{
 
+/***/ 112:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DatabaseProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_idb__ = __webpack_require__(547);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_idb___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_idb__);
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+/*
+  Generated class for the DatabaseProvider provider.
+
+  See https://angular.io/guide/dependency-injection for more info on providers
+  and Angular DI.
+*/
+var DatabaseProvider = /** @class */ (function () {
+    function DatabaseProvider() {
+        console.log('Hello DatabaseProvider Provider');
+        this.dbPromise = __WEBPACK_IMPORTED_MODULE_1_idb___default.a.open('work-time-marker', 1, function (upgradeDB) {
+            upgradeDB.createObjectStore('perhour', { keyPath: 'key' });
+            upgradeDB.createObjectStore('daily', { keyPath: 'key' });
+        });
+    }
+    DatabaseProvider.prototype.savePerhour = function (payload) {
+        this.dbPromise.then(function (db) {
+            var tx = db.transaction('perhour', 'readwrite');
+            tx.objectStore('perhour').put({ 'key': 'perhour', 'value': payload });
+            return tx.complete;
+        }).catch(function (e) {
+            console.log(e);
+        });
+    };
+    DatabaseProvider.prototype.getPerHour = function () {
+        var _this = this;
+        return this.dbPromise.then(function (db) { return __awaiter(_this, void 0, void 0, function () {
+            var tx, store;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        tx = db.transaction('perhour', 'readonly');
+                        store = tx.objectStore('perhour');
+                        return [4 /*yield*/, store.get('perhour')];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        }); });
+    };
+    DatabaseProvider.prototype.saveDaily = function (payload) {
+        this.dbPromise.then(function (db) {
+            var tx = db.transaction('daily', 'readwrite');
+            tx.objectStore('daily').put(__assign({ 'key': payload.date }, payload));
+            return tx.complete;
+        }).catch(function (e) {
+            console.log(e);
+        });
+    };
+    DatabaseProvider.prototype.getAllDaily = function () {
+        var _this = this;
+        return this.dbPromise.then(function (db) { return __awaiter(_this, void 0, void 0, function () {
+            var tx, store;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        tx = db.transaction('daily', 'readonly');
+                        store = tx.objectStore('daily');
+                        return [4 /*yield*/, store.getAll()];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        }); });
+    };
+    DatabaseProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [])
+    ], DatabaseProvider);
+    return DatabaseProvider;
+}());
+
+//# sourceMappingURL=database.js.map
+
+/***/ }),
+
 /***/ 205:
 /***/ (function(module, exports) {
 
@@ -81,6 +216,7 @@ var TabsPage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AboutPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_database_database__ = __webpack_require__(112);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -92,15 +228,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var AboutPage = /** @class */ (function () {
-    function AboutPage(navCtrl) {
+    function AboutPage(db, navCtrl) {
+        this.db = db;
         this.navCtrl = navCtrl;
     }
+    AboutPage.prototype.ionViewDidLoad = function () {
+        this.getMounthData();
+    };
+    AboutPage.prototype.getMounthData = function () {
+        var _this = this;
+        this.db.getAllDaily().then(function (data) {
+            _this.lists = data;
+            console.log(_this.lists);
+        });
+    };
     AboutPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-about',template:/*ion-inline-start:"/Users/jokersk/Desktop/Developer/ionic/work-timer-marker/src/pages/about/about.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      About\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n</ion-content>\n'/*ion-inline-end:"/Users/jokersk/Desktop/Developer/ionic/work-timer-marker/src/pages/about/about.html"*/
+            selector: 'page-about',template:/*ion-inline-start:"/Users/jokersk/Desktop/Developer/ionic/work-timer-marker/src/pages/about/about.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      记录\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <table>\n    <tr>\n      <th>日期</th>\n      <th>翻工</th>\n      <th>放工</th>\n      <th>總小時</th>\n      <th>人工</th>\n    </tr>\n    <tr *ngFor=\'let list of lists\'>\n      <td>{{list.key}}</td>\n      <td>{{list.timeOnWork}}</td>\n      <td>{{list.timeOffWork}}</td>\n      <td>{{list.workTime}}</td>\n      <td>{{list.value}}</td>\n    </tr>\n  </table>\n\n\n</ion-content>\n'/*ion-inline-end:"/Users/jokersk/Desktop/Developer/ionic/work-timer-marker/src/pages/about/about.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__providers_database_database__["a" /* DatabaseProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]])
     ], AboutPage);
     return AboutPage;
 }());
@@ -118,9 +266,9 @@ var AboutPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_mathjs__ = __webpack_require__(549);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_mathjs__ = __webpack_require__(550);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_mathjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_mathjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(196);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_database_database__ = __webpack_require__(112);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -136,8 +284,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var HomePage = /** @class */ (function () {
-    function HomePage(storage, navCtrl) {
-        this.storage = storage;
+    function HomePage(db, navCtrl) {
+        this.db = db;
         this.navCtrl = navCtrl;
         this.timeOnWork = __WEBPACK_IMPORTED_MODULE_2_moment__().format("HH:mm:ss");
         this.getToday();
@@ -147,20 +295,24 @@ var HomePage = /** @class */ (function () {
     };
     HomePage.prototype.calcWorkingTime = function () {
         var _this = this;
-        console.log("calcWorkingTime");
         var start = __WEBPACK_IMPORTED_MODULE_2_moment__(this.timeOnWork, 'HH:mm');
         var end = __WEBPACK_IMPORTED_MODULE_2_moment__(this.timeOffWork, 'HH:mm');
         var duration = __WEBPACK_IMPORTED_MODULE_2_moment__["duration"](end.diff(start));
         this.workTime = __WEBPACK_IMPORTED_MODULE_3_mathjs__["round"](duration.as('hours'), 2);
-        this.storage.get('perHour').then(function (val) {
-            _this.toDayMoney = val * _this.workTime;
+        this.db.getPerHour().then(function (val) {
+            _this.toDayMoney = val.value * _this.workTime;
+            _this.db.saveDaily({ date: _this.today,
+                timeOnWork: _this.timeOnWork,
+                timeOffWork: _this.timeOffWork,
+                workTime: _this.workTime,
+                value: _this.toDayMoney });
         });
     };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-home',template:/*ion-inline-start:"/Users/jokersk/Desktop/Developer/ionic/work-timer-marker/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>記工時</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <h2>今日 {{today }}</h2>\n  \n  <div>\n    <ion-item>\n          <ion-label>翻工時間</ion-label>\n          <ion-datetime displayFormat="H:m" [(ngModel)]="timeOnWork"></ion-datetime>\n    </ion-item>\n    \n    <ion-item>\n        <ion-label>放工時間</ion-label>\n        <ion-datetime displayFormat="H:m" [(ngModel)]="timeOffWork"></ion-datetime>\n    </ion-item>\n\n    \n    <button ion-button (click)="calcWorkingTime()">記錄</button>\n    \n    <ion-item>\n      今日工時： {{workTime}}\n    </ion-item>  \n\n    <ion-item>\n      今日人工： {{toDayMoney}}\n    </ion-item>\n\n  </div>\n  \n</ion-content>\n'/*ion-inline-end:"/Users/jokersk/Desktop/Developer/ionic/work-timer-marker/src/pages/home/home.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4__providers_database_database__["a" /* DatabaseProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]])
     ], HomePage);
     return HomePage;
 }());
@@ -176,7 +328,7 @@ var HomePage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SettingPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(79);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(196);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_database_database__ = __webpack_require__(112);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -196,27 +348,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var SettingPage = /** @class */ (function () {
-    function SettingPage(storage, navCtrl, navParams) {
-        this.storage = storage;
+    function SettingPage(db, navCtrl, navParams) {
+        this.db = db;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.perHour = 12;
     }
     SettingPage.prototype.savePerHour = function () {
-        this.storage.set('perHour', this.perHour);
+        this.db.savePerhour(this.perHour);
     };
     SettingPage.prototype.ionViewDidLoad = function () {
         var _this = this;
-        console.log('ionViewDidLoad SettingPage');
-        this.storage.get('perHour').then(function (val) {
-            _this.perHour = val;
+        this.db.getPerHour().then(function (data) {
+            _this.perHour = data.value;
         });
     };
     SettingPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-setting',template:/*ion-inline-start:"/Users/jokersk/Desktop/Developer/ionic/work-timer-marker/src/pages/setting/setting.html"*/'<!--\n  Generated template for the SettingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>setting</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <ion-item>\n    <ion-label color="primary">每小時人工</ion-label>\n    <ion-input placeholder="每小時人工" [(ngModel)]=\'perHour\' ></ion-input>\n  </ion-item>\n  \n  <button ion-button full (click)=\'savePerHour()\'>保存</button>\n  \n</ion-content>\n'/*ion-inline-end:"/Users/jokersk/Desktop/Developer/ionic/work-timer-marker/src/pages/setting/setting.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavParams */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__providers_database_database__["a" /* DatabaseProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavParams */]])
     ], SettingPage);
     return SettingPage;
 }());
@@ -248,15 +399,15 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__(78);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(539);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(196);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_about_about__ = __webpack_require__(291);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_contact_contact__ = __webpack_require__(975);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_home_home__ = __webpack_require__(292);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_tabs_tabs__ = __webpack_require__(290);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_status_bar__ = __webpack_require__(286);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_splash_screen__ = __webpack_require__(289);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__angular_common__ = __webpack_require__(88);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_setting_setting__ = __webpack_require__(472);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_about_about__ = __webpack_require__(291);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_contact_contact__ = __webpack_require__(973);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_home_home__ = __webpack_require__(292);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_tabs_tabs__ = __webpack_require__(290);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_status_bar__ = __webpack_require__(286);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_splash_screen__ = __webpack_require__(289);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_common__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_setting_setting__ = __webpack_require__(472);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__providers_database_database__ = __webpack_require__(112);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -283,33 +434,33 @@ var AppModule = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
                 __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_5__pages_about_about__["a" /* AboutPage */],
-                __WEBPACK_IMPORTED_MODULE_6__pages_contact_contact__["a" /* ContactPage */],
-                __WEBPACK_IMPORTED_MODULE_7__pages_home_home__["a" /* HomePage */],
-                __WEBPACK_IMPORTED_MODULE_8__pages_tabs_tabs__["a" /* TabsPage */],
-                __WEBPACK_IMPORTED_MODULE_12__pages_setting_setting__["a" /* SettingPage */]
+                __WEBPACK_IMPORTED_MODULE_4__pages_about_about__["a" /* AboutPage */],
+                __WEBPACK_IMPORTED_MODULE_5__pages_contact_contact__["a" /* ContactPage */],
+                __WEBPACK_IMPORTED_MODULE_6__pages_home_home__["a" /* HomePage */],
+                __WEBPACK_IMPORTED_MODULE_7__pages_tabs_tabs__["a" /* TabsPage */],
+                __WEBPACK_IMPORTED_MODULE_11__pages_setting_setting__["a" /* SettingPage */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["a" /* BrowserModule */],
-                __WEBPACK_IMPORTED_MODULE_11__angular_common__["b" /* CommonModule */],
+                __WEBPACK_IMPORTED_MODULE_10__angular_common__["b" /* CommonModule */],
                 __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["c" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */], {}, {
                     links: []
-                }),
-                __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["a" /* IonicStorageModule */].forRoot()
+                })
             ],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* IonicApp */]],
             entryComponents: [
                 __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_5__pages_about_about__["a" /* AboutPage */],
-                __WEBPACK_IMPORTED_MODULE_6__pages_contact_contact__["a" /* ContactPage */],
-                __WEBPACK_IMPORTED_MODULE_7__pages_home_home__["a" /* HomePage */],
-                __WEBPACK_IMPORTED_MODULE_8__pages_tabs_tabs__["a" /* TabsPage */],
-                __WEBPACK_IMPORTED_MODULE_12__pages_setting_setting__["a" /* SettingPage */]
+                __WEBPACK_IMPORTED_MODULE_4__pages_about_about__["a" /* AboutPage */],
+                __WEBPACK_IMPORTED_MODULE_5__pages_contact_contact__["a" /* ContactPage */],
+                __WEBPACK_IMPORTED_MODULE_6__pages_home_home__["a" /* HomePage */],
+                __WEBPACK_IMPORTED_MODULE_7__pages_tabs_tabs__["a" /* TabsPage */],
+                __WEBPACK_IMPORTED_MODULE_11__pages_setting_setting__["a" /* SettingPage */]
             ],
             providers: [
-                __WEBPACK_IMPORTED_MODULE_9__ionic_native_status_bar__["a" /* StatusBar */],
-                __WEBPACK_IMPORTED_MODULE_10__ionic_native_splash_screen__["a" /* SplashScreen */],
+                __WEBPACK_IMPORTED_MODULE_8__ionic_native_status_bar__["a" /* StatusBar */],
+                __WEBPACK_IMPORTED_MODULE_9__ionic_native_splash_screen__["a" /* SplashScreen */],
                 { provide: __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* IonicErrorHandler */] },
+                __WEBPACK_IMPORTED_MODULE_12__providers_database_database__["a" /* DatabaseProvider */]
             ]
         })
     ], AppModule);
@@ -366,7 +517,7 @@ var MyApp = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 548:
+/***/ 549:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -631,11 +782,11 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 548;
+webpackContext.id = 549;
 
 /***/ }),
 
-/***/ 975:
+/***/ 973:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

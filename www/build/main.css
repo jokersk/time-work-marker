@@ -25677,3 +25677,21 @@ ion-navbar.toolbar {
   min-height: calc(46px + constant(safe-area-inset-bottom));
   min-height: calc(46px + env(safe-area-inset-bottom));
 }
+
+page-about .scroll-content {
+  overflow-x: scroll;
+}
+
+page-about table {
+  width: 500px;
+}
+
+page-about table th {
+  padding: 10px;
+  border: 1px solid #eee;
+}
+
+page-about table td {
+  padding: 10px;
+  border: 1px solid #eee;
+}

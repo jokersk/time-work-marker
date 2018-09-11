@@ -2,7 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { IonicStorageModule } from '@ionic/storage';
+
 
 
 import { AboutPage } from '../pages/about/about';
@@ -14,6 +14,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CommonModule } from '@angular/common';
 import { SettingPage } from '../pages/setting/setting';
+import { DatabaseProvider } from '../providers/database/database';
+
 
 @NgModule({
   declarations: [
@@ -27,8 +29,7 @@ import { SettingPage } from '../pages/setting/setting';
   imports: [
     BrowserModule,
     CommonModule,
-    IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -43,7 +44,7 @@ import { SettingPage } from '../pages/setting/setting';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    
+    DatabaseProvider
   ]
 })
 export class AppModule {}

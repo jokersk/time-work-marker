@@ -1,11 +1,28 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      About
+      记录
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+  <table>
+    <tr>
+      <th>日期</th>
+      <th>翻工</th>
+      <th>放工</th>
+      <th>總小時</th>
+      <th>人工</th>
+    </tr>
+    <tr *ngFor='let list of lists'>
+      <td>{{list.key}}</td>
+      <td>{{list.timeOnWork}}</td>
+      <td>{{list.timeOffWork}}</td>
+      <td>{{list.workTime}}</td>
+      <td>{{list.value}}</td>
+    </tr>
+  </table>
+
 
 </ion-content>
