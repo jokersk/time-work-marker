@@ -16,7 +16,7 @@ export class HomePage {
   }
   today : String;
   timeOnWork : any = moment().format("HH:mm:ss");
-  timeOffWork: any;
+  timeOffWork: any = moment().format("HH:mm:ss");
   workTime: number;
   toDayMoney: number;
   

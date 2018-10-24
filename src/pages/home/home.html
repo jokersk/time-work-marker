@@ -5,7 +5,9 @@
 </ion-header>
 
 <ion-content padding>
-  <h2>今日 {{today }}</h2>
+  <h2>日期
+    <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="today"></ion-datetime>
+  </h2>
   
   <div>
     <ion-item>
